@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input {
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Calculatrice</h2>
+    <form id="calculatorForm">
+        <label for="num1">Nombre 1:</label>
+        <input type="text" id="num1" name="num1" required pattern="\d+">
+
+        <label for="num2">Nombre 2:</label>
+        <input type="text" id="num2" name="num2" required pattern="\d+" oninput="validateInput(this)">
+
+        <button type="button" onclick="calculate()">Calculer</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function validateInput(input) {
+            // Permet uniquement les chiffres
+            input.value = input.value.replace(/[^0-9]/g, '');
+
+            // Évite la division par zéro
+            if (input.id === "num2" && input.value === "0") {
+                alert("Division par zéro impossible. Veuillez saisir un nombre différent de zéro.");
+                input.value = "";
+            }
+        }
+
+        function calculate() {
+            // Récupérer les valeurs des champs
+            var num1 = parseFloat(document.getElementById("num1").value);
+            var num2 = parseFloat(document.getElementById("num2").value);
+
+            // Vérifier si les valeurs sont des nombres valides
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Veuillez saisir des nombres valides.");
+                return;
+            }
+
+            // Calculer les opérations
+            var sum = num1 + num2;
+            var product = num1 * num2;
+            var division = num1 / num2;
+            var subtraction = num1 - num2;
+
+            // Afficher les résultats
+            document.getElementById("result").innerHTML = "Résultats : <br>" +
+                "Somme : " + sum + "<br>" +
+                "Produit : " + product + "<br>" +
+                "Division : " + division + "<br>" +
+                "Soustraction : " + subtraction;
+        }
+    </script>
+</body>
+</html>
